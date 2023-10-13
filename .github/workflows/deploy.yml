@@ -1,0 +1,32 @@
+on:
+  push:
+    branches:
+      - main
+name: Deploy webstie on push
+
+
+jobs: 
+  web-deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:  
+    - name: Get latest code
+      uses: actions/checkout@v3
+
+    - name: use node.js 18
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18.17.1'
+
+    - name: Build project
+      run: |
+        npm install
+        npm run build
+    - name: sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.GIT_CPANEL_REACT_SERVER }}
+        username: ${{ secrets.GIT_CPANEL_REACT_USER }}
+        password: ${{ secrets.GIT_CPANEL_REACT_PWD }}
+        protocol: ${{ secrets.GIT_CPANEL_REACT_PROTOCOL }} 
+        local-dir: ./build/

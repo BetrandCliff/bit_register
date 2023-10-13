@@ -11,25 +11,41 @@ const Register = () => {
 const dispatch = useAppDispatch()
 const [firstName,setFirstName ]= useState('')
 const [lastName,setLastName ]= useState('')
-const [email,setEmail ]= useState('')
-const [gender,setGender ]= useState('')
+const [email,setEmail]= useState('')
+const [gender,setGender]= useState('')
 const [nationality,setNationality ]= useState('')
 const [isNext,setIsNext ]= useState(false)
 const [address,setAddress]= useState('')
 
 const handleNext =()=>{
-                if(firstName!==""&&lastName!==""&&email!==""&&gender!==""&& nationality!==""){
+                if(lastName!==""&&email!==""&& nationality!==""){
                        if(email.includes('@')&& email.includes('.')){
                       
-                               setIsNext(true)
+                         setIsNext(true)
+                       
+
+                       console.log("firstname ",firstName)
+                       console.log("lastname ",lastName)
+                       console.log("email ",email)
+                       console.log("gender ",gender)
+                       console.log("nationality ",nationality)
+                       console.log("next state ",isNext)
+
                        }
 
                 }
+
+              
+              
+              
+              
+              
+              
 }
 
 
 const handleSubmit =()=>{
-        dispatch(admissionAction.applicantPersonal({firstName,lastName,email,gender,nationality}))
+        dispatch(admissionAction.applicantPersonal({firstName,lastName,email,gender,nationality,address}))
 }
 
   return (
@@ -59,7 +75,7 @@ const handleSubmit =()=>{
                                 autoComplete="true"
                                 placeholder="please enter your first name"
                             
-                                onBlur={handleNext}
+                                // onBlur={handleNext}
                                 />
                                 {/* <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage> */}
                         </FormControl>
@@ -69,7 +85,7 @@ const handleSubmit =()=>{
                                 <Input name='name'
                                  w='100%'  
                                 onChange={(e)=>setLastName(e.target.value)} placeholder="please enter your name"
-                                onBlur={handleNext}
+                                // onBlur={handleNext}
                                 />
                                 {/* <FormErrorMessage>{formik.errors.lastName}</FormErrorMessage> */}
                         </FormControl>
@@ -78,9 +94,9 @@ const handleSubmit =()=>{
                                 <FormLabel mb='3px' htmlFor='name'>Email</FormLabel>
                                 <Input name='name'
                                  w='100%'  
-                                onChange={(e)=>{setEmail(e.target.value);handleNext()}}
+                                onChange={(e)=>{setEmail(e.target.value)}}
                                  placeholder="please enter yourlast name"
-                                onBlur={handleNext}
+                                // onBlur={handleNext}
                                 />
                         </FormControl>
                      
@@ -89,34 +105,32 @@ const handleSubmit =()=>{
                                  <FormLabel mb='3px' htmlFor='name'>Nationality</FormLabel>
                                  <Input name='name'
                                   w='100%'  
-                                 onChange={(e)=>{setNationality(e.target.value);handleNext()}}
+                                 onChange={(e)=>{setNationality(e.target.value)}}
                                   placeholder="please enter yourlast name"
-                                 onBlur={handleNext}
+                                //  onBlur={handleNext}
                                  />
                          </FormControl>
                          <FormControl  >
          <FormLabel  htmlFor='email'>Address</FormLabel>
-         <Input name='email' w='100%'
-         onChange={(e)=>{setAddress(e.target.value);handleNext()}} 
+         <Input name='address' w='100%'
+         
+         onChange={(e)=>{setAddress(e.target.value)}} 
          placeholder="please enter your address"/>
-         {/* <FormErrorMessage>{formik.errors.address}</FormErrorMessage> */}
  </FormControl>
                                              
-                         <FormControl   mt='6px'>
+                        <FormControl   mt='6px'>
                                 <FormLabel mb='3px' htmlFor='name'>Gender</FormLabel>
-                                <Select onChange={(e)=>{setGender(e.target.value);handleNext()}}
-                                
-                                >
-                                   <option>None</option>
-                                   <option>Male</option>
-                                   <option>Female</option>
+                                <Select onChange={(e)=>{handleNext();setGender(e.target.value)}}>  
+                                   <option value=''>None</option>
+                                   <option value='Male'>Male</option>
+                                   <option value='Female'>Female</option>
+
                                 </Select>
                                 {/* <FormErrorMessage>{formik.errors.gender}</FormErrorMessage> */}
                         </FormControl>
 
                      
-                     {
-                        
+                     {   
                      isNext&&
                         <Box mt='5px' >
                         <Link to="/registerForm2" className='link'> <Button type='submit' variant="outline" h='2.4rem' w='6rem' mt={15} onClick={handleSubmit}>NEXT</Button> </Link>
@@ -211,7 +225,7 @@ const handleFile =(e:React.ChangeEvent<HTMLInputElement>, name="")=>{
                                                 <option value='National Diploma'>National Diploma</option>
                                                 <option value='Higher National Diploma'>Higher National Diploma</option>
                                                 <option value='Bachelors Degree'>Bachelors Degree</option>
-                                                <option value='Masters Degree'>Masters Degree</option>
+                                                <option value='Masters Degree'> </option>
                                                 <option value='PHD'>PHD</option>
                                                 <option value='Other'>Other</option>
                                          </Select>
@@ -316,7 +330,7 @@ export const RegisterForm3 = () => {
 
 const  handleSubmitData=()=>{
         setIsSubmitted(true)
-                        dispatch(admissionAction.applicantGuardian({guardianFirstName,guardianLastName,guardianCity,guardianTel,relationshipWithGuardian:relationship}))
+                        // dispatch(admissionAction.applicantGuardian({guardianFirstName,guardianLastName,guardianCity,guardianTel,relationshipWithGuardian:relationship}))
                         dispatch(postAdmissionAction({
                                                       
     firstName:                applicant.applicantPersonalData.firstName,
@@ -330,11 +344,11 @@ const  handleSubmitData=()=>{
     highestQualification:     applicant.applicantEducation.highestQualification,
     document:                 applicant.applicantEducation.document,        
     passport:                 applicant.applicantEducation.passport,        
-    guardianFirstName:        applicant.applicantGuardian.guardianFirstName,
-    guardianLastName:         applicant.applicantGuardian.guardianLastName,
-    guardianTel:              applicant.applicantGuardian.guardianTel,
-    guardianCity:             applicant.applicantGuardian.guardianCity,
-    relationshipWithGuardian: applicant.applicantGuardian.relationshipWithGuardian,
+    guardianFirstName:        guardianFirstName,
+    guardianLastName:         guardianLastName,
+    guardianTel:              guardianTel,
+    guardianCity:             guardianCity,
+    relationshipWithGuardian: relationship,
     created_at                : ""
 
                
