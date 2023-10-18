@@ -16,8 +16,8 @@ const StudentSidebar = () => {
    <Box h={{md:'100vh'}} w={{md:"15vw"}} >
     {/* Mobile NavBar */}
 
-    <Box pos="fixed" bottom="22px" top="84vh"  zIndex={2} display={{md:"none", base:"flex"}}   m='10px' >
-      <Box w='87vw' h='6vh'  bgColor="GrayText"  borderRadius='23px' position={{base:"fixed",md:"relative"}}>
+    <Box pos="fixed" bottom="15px" top="90vh"  zIndex={2} display={{md:"none", base:"flex"}}   m='10px' >
+      <Box w='94vw' h='6vh'  bgColor="GrayText"  borderRadius='23px' position={{base:"fixed",md:"relative"}}>
         
         <Box display='flex' h='inherit' justifyContent='center' alignItems="center" >
           <Box w='35px'/>
@@ -35,7 +35,7 @@ const StudentSidebar = () => {
     // pos={{md:"",base:"absolute",bottom:12}}
     >   
     <Image src={logo} borderRadius='50%'  w='50%' marginTop='2rem' mb='0.3rem' />
-    <Text mb='10px'>Buea Institute of Technology</Text>
+    <Text mb='10px' textAlign='center'>Buea Institute of Technology</Text>
     <Divider mt={2} mb={5}/>
     
     {/* <MenuItems path='admin/students' text='Student' image={<MdOutlinePostAdd/>}/> */}

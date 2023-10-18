@@ -18,7 +18,7 @@ export const StudentResult = () => {
          
 
         <Box> 
-             <Card w={{base:"91%",xl:'100%'}} display='flex' flexDirection='column' alignItems='center'
+             <Card w={{base:"100%",xl:'100%'}} display='flex' flexDirection='column' alignItems='center'
               overflowY='scroll'
               overflowX='hidden'
               css={{

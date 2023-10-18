@@ -17,14 +17,14 @@ const StudentDashboard = () => {
 
   return (
     <Box display='flex' width="100vw"  h='100vh'  overflow='hidden' >
-       <Box h='100vh' overflowY='hidden'>
+   
        <StudentSidebar />
-       </Box>
-    <Box   w={{md:"65vw"}} display='flex' flexDirection='column' ml={3} mr={3} h={{base:'100%',md:'100vh'}} 
+       
+    <Box   w={{md:"80vw"}} display='flex' flexDirection='column' ml={3} mr={3} h={{base:'100%',md:'100vh'}} 
     overflow='hidden'
    >
      {/* THIS IS FOR DISPLAYING THE OUTPUT OF THE INDIVIDUAL SCREENS */}
-       <Box h='90vh' overflowY='hidden'>
+       <Box h='100%' overflowY='hidden'>
           <Outlet/>
        </Box>   
     </Box>

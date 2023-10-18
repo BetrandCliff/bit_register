@@ -1,10 +1,13 @@
 
-import { Box, Button, Card, Flex, FormControl, FormLabel, Heading, Image,Input,Text } from '@chakra-ui/react'
+import { Box, Button, Card, Flex, FormControl, FormLabel, Heading, Image,Input,Text,useBreakpointValue } from '@chakra-ui/react'
 import React from 'react'
 import  image_source from'../assets/images/land.webp'
 import { Link } from 'react-router-dom'
 
 const Login = () => {
+
+    const isMobile = useBreakpointValue({ base: true, md: false });
+
 
     const handleLogin=()=>{
 
@@ -14,7 +17,7 @@ const Login = () => {
   return (
    
    <Box w='100vw' h='100vh' display='flex' justifyContent='center' alignItems='center'>
-        <Box h='90vh' w='60vw'>
+        <Box h='90vh' w={{base:"98vw",xl:'60vw'}}>
             <Card h='100%' w="100%">
 
             <Flex h='100%' w='100%'>
@@ -40,9 +43,14 @@ const Login = () => {
 
                          <Text mt='20px' display='flex' color='#b6b6b4'>If you don't have an account <Link to='/register'><Text color='blue' ml='8px'>Apply</Text></Link></Text>
                 </Box>
-                <Box flex={1} h='100%'>
-                    <Image src={image_source} fit='cover' h='100%' w='100%' />
-                </Box>
+
+                    {
+                            !isMobile &&
+                            <Box flex={1} h='100%'>
+                            <Image src={image_source} fit='cover' h='100%' w='100%' />
+                        </Box>
+                    }
+
             </Flex>
 
             </Card>

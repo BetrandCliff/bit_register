@@ -9,7 +9,7 @@ const Profile = () => {
   return (
    <Box w='100%' h='100vh'>
       <MobileAppBar text="Profile" />
-      <Card w="86vw" h='90vh' display='flex' justifyContent='center' alignItems='center'>
+      <Card w="94vw" h='90vh' display='flex' justifyContent='center' alignItems='center'>
             <Avatar w='45%' h='22%'src=''/>
 
            <Box h='60%' w='80%'>
