@@ -70,8 +70,7 @@ import exp from "constants"
 
 
 export interface applicantsPersonal{
-    firstName: string,
-    lastName: string,
+    fullNames: string,
     email: string,
     gender: string,
     nationality:string
@@ -98,8 +97,8 @@ export interface applicantsPersonal{
 
 export interface AdmissionDetails{
 
-    firstName:                       string|null
-    lastName:                       string|null
+    fullNames:                       string|null
+    // lastName:                       string|null
     email:                      string|null
     gender:                        string|null
     town:                    string|null

@@ -9,8 +9,8 @@ import { admissionAction, postAdmissionAction } from '../../../services/registra
 
 const Register = () => {
 const dispatch = useAppDispatch()
-const [firstName,setFirstName ]= useState('')
-const [lastName,setLastName ]= useState('')
+const [fullNames,setFullName ]= useState('')
+// const [lastName,setLastName ]= useState('')
 const [email,setEmail]= useState('')
 const [gender,setGender]= useState('')
 const [nationality,setNationality ]= useState('')
@@ -18,14 +18,14 @@ const [isNext,setIsNext ]= useState(false)
 const [address,setAddress]= useState('')
 
 const handleNext =()=>{
-                if(lastName!==""&&email!==""&& nationality!==""){
+                if(fullNames!==""&&email!==""&& nationality!==""){
                        if(email.includes('@')&& email.includes('.')){
                       
                          setIsNext(true)
                        
 
-                       console.log("firstname ",firstName)
-                       console.log("lastname ",lastName)
+                //        console.log("firstname ",firstName)
+                //        console.log("lastname ",lastName)
                        console.log("email ",email)
                        console.log("gender ",gender)
                        console.log("nationality ",nationality)
@@ -34,18 +34,13 @@ const handleNext =()=>{
                        }
 
                 }
-
-              
-              
-              
-              
-              
-              
+                                                                        
 }
 
 
 const handleSubmit =()=>{
-        dispatch(admissionAction.applicantPersonal({firstName,lastName,email,gender,nationality,address}))
+        dispatch(admissionAction.applicantPersonal
+                ({fullNames,email,gender,nationality,address}))
 }
 
   return (
@@ -67,11 +62,11 @@ const handleSubmit =()=>{
                         <Heading fontSize='16px'>APPLICATION FORM</Heading>
                         
                         <FormControl  mt='6px'>
-                                <FormLabel mb='3px' htmlFor='name'>First Name</FormLabel>
+                                <FormLabel mb='3px' htmlFor='name' color='#b6b6b4'>Full Names</FormLabel>
                                 <Input 
                                 name='name' 
                                  w='100%' 
-                                onChange={(e)=>setFirstName(e.target.value)} 
+                                onChange={(e)=>setFullName(e.target.value)} 
                                 autoComplete="true"
                                 placeholder="please enter your first name"
                             
@@ -80,18 +75,10 @@ const handleSubmit =()=>{
                                 {/* <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage> */}
                         </FormControl>
 
-                        <FormControl  mt='6px'>
-                                <FormLabel mb='3px' htmlFor='name'>Last Name</FormLabel>
-                                <Input name='name'
-                                 w='100%'  
-                                onChange={(e)=>setLastName(e.target.value)} placeholder="please enter your name"
-                                // onBlur={handleNext}
-                                />
-                                {/* <FormErrorMessage>{formik.errors.lastName}</FormErrorMessage> */}
-                        </FormControl>
+
 
                         <FormControl  mt='6px'>
-                                <FormLabel mb='3px' htmlFor='name'>Email</FormLabel>
+                                <FormLabel mb='3px' htmlFor='name' color='#b6b6b4'>Email</FormLabel>
                                 <Input name='name'
                                  w='100%'  
                                 onChange={(e)=>{setEmail(e.target.value)}}
@@ -102,7 +89,7 @@ const handleSubmit =()=>{
                      
 
                         <FormControl  mt='6px'>
-                                 <FormLabel mb='3px' htmlFor='name'>Nationality</FormLabel>
+                                 <FormLabel mb='3px' htmlFor='name' color='#b6b6b4'>Nationality</FormLabel>
                                  <Input name='name'
                                   w='100%'  
                                  onChange={(e)=>{setNationality(e.target.value)}}
@@ -111,7 +98,7 @@ const handleSubmit =()=>{
                                  />
                          </FormControl>
                          <FormControl  >
-         <FormLabel  htmlFor='email'>Address</FormLabel>
+         <FormLabel  htmlFor='email' color='#b6b6b4'>Address</FormLabel>
          <Input name='address' w='100%'
          
          onChange={(e)=>{setAddress(e.target.value)}} 
@@ -119,7 +106,7 @@ const handleSubmit =()=>{
  </FormControl>
                                              
                         <FormControl   mt='6px'>
-                                <FormLabel mb='3px' htmlFor='name'>Gender</FormLabel>
+                                <FormLabel mb='3px' htmlFor='name' color='#b6b6b4'>Gender</FormLabel>
                                 <Select onChange={(e)=>{handleNext();setGender(e.target.value)}}>  
                                    <option value=''>None</option>
                                    <option value='Male'>Male</option>
@@ -147,6 +134,8 @@ const handleSubmit =()=>{
                 </VStack>
 
                 {/* </form> */}
+                <Text mt='20px' display='flex' color='#b6b6b4'>If you already have an account <Link to='/'><Text color='blue' ml='8px'>login</Text></Link></Text>
+
         </Card>
    </Box>
   )
@@ -333,8 +322,8 @@ const  handleSubmitData=()=>{
                         // dispatch(admissionAction.applicantGuardian({guardianFirstName,guardianLastName,guardianCity,guardianTel,relationshipWithGuardian:relationship}))
                         dispatch(postAdmissionAction({
                                                       
-    firstName:                applicant.applicantPersonalData.firstName,
-    lastName:                 applicant.applicantPersonalData.lastName,
+    fullNames:                applicant.applicantPersonalData.fullNames,
+//     lastName:                 applicant.applicantPersonalData.lastName,
     email:                    applicant.applicantPersonalData.email,
     gender:                   applicant.applicantPersonalData.gender,
     nationality:              applicant.applicantPersonalData. nationality,

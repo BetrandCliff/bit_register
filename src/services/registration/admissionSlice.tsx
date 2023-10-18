@@ -59,8 +59,8 @@ const initialState:Admission={
     // applicants: mockAdmissionData,
     applicants: [],
     applicantPersonalData: {
-        firstName: "",
-        lastName: "",
+        fullNames: "",
+       
         email: "",
         gender: "",
         nationality:"",
