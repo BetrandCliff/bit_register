@@ -46,8 +46,8 @@ const Login = () => {
 
                     {
                             !isMobile &&
-                            <Box flex={1} h='100%'>
-                            <Image src={image_source} fit='cover' h='100%' w='100%' />
+                            <Box flex={1} h='100%' display='flex' justifyContent='center'>
+                            <Image src={image_source}/>
                         </Box>
                     }
 
