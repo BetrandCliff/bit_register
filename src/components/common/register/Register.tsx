@@ -214,7 +214,7 @@ const handleFile =(e:React.ChangeEvent<HTMLInputElement>, name="")=>{
                                                 <option value='National Diploma'>National Diploma</option>
                                                 <option value='Higher National Diploma'>Higher National Diploma</option>
                                                 <option value='Bachelors Degree'>Bachelors Degree</option>
-                                                <option value='Masters Degree'> </option>
+                                                <option value='Masters Degree'> Masters Degree</option>
                                                 <option value='PHD'>PHD</option>
                                                 <option value='Other'>Other</option>
                                          </Select>
