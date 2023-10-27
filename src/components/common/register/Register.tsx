@@ -1,11 +1,16 @@
 
-import { Box,Text ,Button, Card, FormControl, Image, FormLabel, Input, VStack, Heading, Flex, Select, Alert, AlertIcon, AlertDescription, AlertTitle} from '@chakra-ui/react'
+import { Box,Text ,Button, Card, FormControl, Image, FormLabel, Input, VStack, Heading, Flex, Select, Alert, AlertIcon, AlertDescription, AlertTitle, FormErrorMessage} from '@chakra-ui/react'
 
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import backArrow from '../assets/images/back_arrow.svg'
 import { useAppDispatch, useAppSelector } from '../../../services/common/hooks'
 import { admissionAction, postAdmissionAction } from '../../../services/registration/admissionSlice'
+import { useFormik } from 'formik'
+import { useForm,Controller } from 'react-hook-form'
+import { EducationalData, GuardianData, PersonalData } from './model/form_interface'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup';
 
 const Register = () => {
 const dispatch = useAppDispatch()
@@ -14,35 +19,36 @@ const [fullNames,setFullName ]= useState('')
 const [email,setEmail]= useState('')
 const [gender,setGender]= useState('')
 const [nationality,setNationality ]= useState('')
-const [isNext,setIsNext ]= useState(false)
+const [isNext,setIsNext ]= useState(false
+        )
 const [address,setAddress]= useState('')
 
-const handleNext =()=>{
-                if(fullNames!==""&&email!==""&& nationality!==""){
-                       if(email.includes('@')&& email.includes('.')){
-                      
-                         setIsNext(true)
-                       
-
-                //        console.log("firstname ",firstName)
-                //        console.log("lastname ",lastName)
-                       console.log("email ",email)
-                       console.log("gender ",gender)
-                       console.log("nationality ",nationality)
-                       console.log("next state ",isNext)
-
-                       }
-
-                }
-                                                                        
-}
+const  navigator = useNavigate()
 
 
-const handleSubmit =()=>{
+const schema = yup.object().shape({
+        fullName: yup.string().required('FullName is required'),
+        email: yup.string().required('Email is required').email("Invalid Email"),
+        gender: yup.string().required('Gender is required'),
+        nationality: yup.string().required('Nationality is required'),
+        address: yup.string().required('Address is required'),
+      });
+const {
+        control,
+        handleSubmit,
+        formState: { errors }
+
+}= useForm<PersonalData>({
+        resolver: yupResolver(schema),
+})
+
+
+const onSubmit = (data: PersonalData) => {
         dispatch(admissionAction.applicantPersonal
-                ({fullNames,email,gender,nationality,address}))
-}
-
+                ({fullNames:data.fullName,email:data.email,gender:data.gender,nationality:data.nationality,address:data.address}))
+                navigator('/registerForm2')
+       
+      };               
   return (
    <Box  display='flex' justifyContent='center' alignItems='center' h='100vh' w='100vw'   >
         
@@ -55,72 +61,153 @@ const handleSubmit =()=>{
              display='flex'
              >
                {/* <form onSubmit={formik.handleSubmit}>  */}
+        {/* <form */}
+        
             <VStack 
+            as='form'
             w='80%'
+        //     onSubmit={handleSubmit(onSubmit)}
                >
                         
                         <Heading fontSize='16px'>APPLICATION FORM</Heading>
                         
-                        <FormControl  mt='6px'>
-                                <FormLabel mb='3px' htmlFor='name' color='#b6b6b4'>Full Names</FormLabel>
-                                <Input 
-                                name='name' 
-                                 w='100%' 
-                                onChange={(e)=>setFullName(e.target.value)} 
-                                autoComplete="true"
-                                placeholder="please enter your first name"
-                            
-                                // onBlur={handleNext}
-                                />
-                                {/* <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage> */}
-                        </FormControl>
+                        <Controller
+                                name='fullName'
+                                control={control}
+                                render={({field})=>( 
+                                        <FormControl  mt='6px' isInvalid={!!errors.fullName}>
+                                        <FormLabel mb='3px' htmlFor='fullName' color='#b6b6b4'>Full Names</FormLabel>
+                                        <Input 
+                                        id='fullName'
+                                        type='text'
+                                         w='100%' 
+
+                                         {...field}
+                                        autoComplete="true"
+                                        placeholder="please enter your first name"
+                                        
+                                        
+                                        />
+                                        <FormErrorMessage>{errors.fullName?.message}</FormErrorMessage>
+                                        </FormControl>
+                                 )}
+                        
+                        />
+                        
+                        
+                        
+                        <Controller
+         name='email'
+         control={control}
+         render={({field})=>( 
+                 <FormControl  mt='6px' isInvalid={!!errors.email}>
+                 <FormLabel mb='3px' htmlFor='email' color='#b6b6b4'>Email</FormLabel>
+                 <Input 
+                 id='email'
+                 type='text'
+                  w='100%' 
+                  {...field}
+                 autoComplete="true"
+                 placeholder="please enter your first name"
+                 
+                 
+                 />
+                 <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+                 </FormControl>
+          )}
+ 
+ />
+                        
+                        
+                        <Controller
+         name='nationality'
+         control={control}
+         render={({field})=>( 
+                 <FormControl  mt='6px' isInvalid={!!errors.nationality}>
+                 <FormLabel mb='3px' htmlFor='nationality' color='#b6b6b4'>Nationality</FormLabel>
+                 <Input 
+                 id='nationality'
+                 type='text'
+                  w='100%' 
+                  {...field}
+                 autoComplete="true"
+                 placeholder="please enter your first name"
+                 
+                 
+                 />
+                 <FormErrorMessage>{errors.nationality?.message}</FormErrorMessage>
+                 </FormControl>
+          )}
+ 
+ />
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <Controller
+         name='address'
+         control={control}
+         render={({field})=>( 
+                 <FormControl  mt='6px' isInvalid={!!errors.address}>
+                 <FormLabel mb='3px' htmlFor='address' color='#b6b6b4'>Address</FormLabel>
+                 <Input 
+                 id='address'
+                 type='text'
+                  w='100%' 
+                  {...field}
+              
+              
+              
+                 autoComplete="true"
+                 placeholder="please enter your first name"
+                 
+                 
+                 />
+                 <FormErrorMessage>{errors.address?.message}</FormErrorMessage>
+                 </FormControl>
+          )}
+ 
+                        />                                                                                                                                                                                                                                                                            
+
+<Controller
+         name='gender'
+         control={control}
+         render={({field})=>( 
+                 <FormControl  mt='6px' isInvalid={!!errors.gender}>
+                 <FormLabel mb='3px' htmlFor='gender' color='#b6b6b4'>Gender</FormLabel>
+                 
+                 <Select 
+                 id='gender'
+                {...field}
+                >  
+                   <option value=''>None</option>
+                   <option value='Male'>Male</option>
+                   <option value='Female'>Female</option>
+
+                </Select>
+                 
+                 <FormErrorMessage>{errors.gender?.message}</FormErrorMessage>
+                 </FormControl>
+          )}
+ 
+ />
 
 
 
-                        <FormControl  mt='6px'>
-                                <FormLabel mb='3px' htmlFor='name' color='#b6b6b4'>Email</FormLabel>
-                                <Input name='name'
-                                 w='100%'  
-                                onChange={(e)=>{setEmail(e.target.value)}}
-                                 placeholder="please enter yourlast name"
-                                // onBlur={handleNext}
-                                />
-                        </FormControl>
-                     
 
-                        <FormControl  mt='6px'>
-                                 <FormLabel mb='3px' htmlFor='name' color='#b6b6b4'>Nationality</FormLabel>
-                                 <Input name='name'
-                                  w='100%'  
-                                 onChange={(e)=>{setNationality(e.target.value)}}
-                                  placeholder="please enter yourlast name"
-                                //  onBlur={handleNext}
-                                 />
-                         </FormControl>
-                         <FormControl  >
-         <FormLabel  htmlFor='email' color='#b6b6b4'>Address</FormLabel>
-         <Input name='address' w='100%'
-         
-         onChange={(e)=>{setAddress(e.target.value)}} 
-         placeholder="please enter your address"/>
- </FormControl>
-                                             
-                        <FormControl   mt='6px'>
-                                <FormLabel mb='3px' htmlFor='name' color='#b6b6b4'>Gender</FormLabel>
-                                <Select onChange={(e)=>{handleNext();setGender(e.target.value)}}>  
-                                   <option value=''>None</option>
-                                   <option value='Male'>Male</option>
-                                   <option value='Female'>Female</option>
 
-                                </Select>
-                                {/* <FormErrorMessage>{formik.errors.gender}</FormErrorMessage> */}
-                        </FormControl>
+
+
+
 
                      
                      {   
-                     isNext&&
+                //      isNext&&
                         <Box mt='5px' >
-                        <Link to="/registerForm2" className='link'> <Button type='submit' variant="outline" h='2.4rem' w='6rem' mt={15} onClick={handleSubmit}>NEXT</Button> </Link>
+                        <Link to="/register" className='link'> <Button type='submit' variant="outline" h='2.4rem' w='6rem' mt={15}  onClick={handleSubmit(onSubmit)}>NEXT</Button> </Link>
                         </Box>
                       }
                         {/* <Flex> */}
@@ -132,6 +219,7 @@ const handleSubmit =()=>{
                 }
 
                 </VStack>
+                {/* </form> */}
 
                 {/* </form> */}
                 <Text mt='20px' display='flex' color='#b6b6b4'>If you already have an account <Link to='/'><Text color='blue' ml='8px'>login</Text></Link></Text>
@@ -150,25 +238,40 @@ export default Register
 export const RegisterForm2 = () => {
 
 
-const [isNext,setIsNext ]= useState(false)
+
 
 const dispatch =useAppDispatch()
 
-const [telephone,setTelephone]= useState<number>(0)
-const [highestQualification,setHighestQualification]= useState('')
-const [program,setProgram]= useState('')
 const [document,setDocs]= useState<File>()
 const [passport,setPassport]= useState<File>()
 
-const handleNext =()=>{
-        if(telephone!==0&& highestQualification !=="" && program !==""){
-                        setIsNext(true)
-        }       
-}
 
-const handleSubmit =()=>{
-        dispatch(admissionAction.applicantEducation({telephone,highestQualification,program,document,passport}))
-}
+const  navigator = useNavigate()
+
+
+const schema = yup.object().shape({
+        telephone: yup.number().required('Telelpho is required'),
+        highestQualification: yup.string().required('qualification is required'),
+        program: yup.string().required('Program is required'),
+      });
+const {
+        control,
+        handleSubmit,
+        formState: { errors }
+
+}= useForm<EducationalData>({
+        resolver: yupResolver(schema),
+})
+
+
+const onSubmit = (data: EducationalData) => {
+         dispatch(admissionAction.applicantEducation(
+                {telephone:data.telephone,highestQualification:data.highestQualification,
+                        program:data.program,document,passport}))
+        
+                navigator('/registerForm3')
+       
+      };               
 
 const handleFile =(e:React.ChangeEvent<HTMLInputElement>, name="")=>{
         if(e.target.files){
@@ -196,56 +299,114 @@ const handleFile =(e:React.ChangeEvent<HTMLInputElement>, name="")=>{
                   w='80%'
                     >
                              
-                             <Heading fontSize='22px'>APPLICATION FORM</Heading>                                                                                                      
-                             <FormControl mt='6px' >
-                                     <FormLabel  htmlFor='password'>Telphone</FormLabel>
-                                     <Input name='password' w='100%' 
-                                      onChange={(e)=>{setTelephone(parseInt(e.target.value));handleNext()}} placeholder="please enter your telephone"/>
-                             </FormControl>
+                             <Heading fontSize='22px'>APPLICATION FORM</Heading>  
 
-                             <FormControl  mt='8px'>
-                                     <FormLabel  htmlFor='name'>Highest qualification</FormLabel>
-                                         <Select onChange={(e)=>{setHighestQualification(e.target.value);handleNext()}}>
-                                                <option value=''>None</option>
-                                                <option value ='First School'>Frist school</option>
-                                                <option value ='GCE Ordinary level'>GCE Ordinary Level</option>
-                                                <option value ='Advance Level'>Advance Level</option>
-                                                <option value='Baccalereat'>Baccalereat</option>
-                                                <option value='National Diploma'>National Diploma</option>
-                                                <option value='Higher National Diploma'>Higher National Diploma</option>
-                                                <option value='Bachelors Degree'>Bachelors Degree</option>
-                                                <option value='Masters Degree'> Masters Degree</option>
-                                                <option value='PHD'>PHD</option>
-                                                <option value='Other'>Other</option>
-                                         </Select>
+                                
+<Controller
+         name='telephone'
+         control={control}
+         render={({field})=>( 
+                 <FormControl  mt='6px' isInvalid={!!errors.telephone}>
+                 <FormLabel mb='3px' htmlFor='telephone' color='#b6b6b4'>Telephone</FormLabel>
+                 
+                
+                
+                
+                
+                
+                
+                 <Input id='telephone' w='100%'  placeholder="please enter your telephone" {...field}/>
 
 
+                
+                 
+                 <FormErrorMessage>{errors.telephone?.message}</FormErrorMessage>
+                 </FormControl>
+          )}
+ 
+ />
 
-                             </FormControl>
+
+
+
+
+
+
+
+
+                                
+<Controller
+         name='highestQualification'
+         control={control}
+         render={({field})=>( 
+                 <FormControl  mt='6px' isInvalid={!!errors.highestQualification}>
+                 <FormLabel mb='3px' htmlFor='program' color='#b6b6b4'>Highest qualification</FormLabel>
+                 
+                 <Select 
+                 id='highestQualification'
+                {...field}
+                >  
+                     <option value=''>None</option>
+                     <option value ='First School'>Frist school</option>
+                     <option value ='GCE Ordinary level'>GCE Ordinary Level</option>
+                     <option value ='Advance Level'>Advance Level</option>
+                     <option value='Baccalereat'>Baccalereat</option>
+                     <option value='National Diploma'>National Diploma</option>
+                     <option value='Higher National Diploma'>Higher National Diploma</option>
+                     <option value='Bachelors Degree'>Bachelors Degree</option>
+                     <option value='Masters Degree'> Masters Degree</option>
+                     <option value='PHD'>PHD</option>
+                     <option value='Other'>Other</option>
+                   
+                   
+
+                </Select>
+                 
+                 <FormErrorMessage>{errors.highestQualification?.message}</FormErrorMessage>
+                 </FormControl>
+          )}
+ 
+ />
                             
+
+
                             
-                             <FormControl   mt='6px'>
-                                     <FormLabel  htmlFor='name'>Program</FormLabel>
-                                     <Select onChange={(e)=>{setProgram(e.target.value);handleNext()}}>
-                                     <option value=''>None</option>
-                                        <option value ='HND Software Engineering'>HND Software Engineering</option>
-                                        <option value ='HND E-Commence and Digital Marketing'>HND E-Commence and Digital Marketing</option>
-                                        <option value ='HND Computer Graphic and Web Design'> HND Computer Graphic and Web Design</option>
-                                        <option value ='HND Media Photography and Audiovisual'> HND Media Photography and Audiovisual</option>
-                                        <option value='HND Journalism'>HND Journalism</option>
-                                        <option value='HND Graphic Design'>HND Graphic Design</option>
-                                        <option value='HND Cinematography'>HND Cinematography</option>
-                                        <option value='ND Applications Development'>ND Applications Development</option>
-                                        <option value='ND Webmaster'>ND Webmaster</option>
-                                        <option value='ND Graphic Design'>ND Graphic Design</option>
-                                        <option value='ND Office Automation Secretaryship'>ND Office Automation Secretaryship</option>
-                                        <option value='Certificate Basic Computing'>Certificate Basic Computing</option>
-                                        <option value='Certificate Web Design'>Certificate Web Design</option>
-                                        <option value='Certificate Graphic Design'>Certificate Graphic Design</option>
-                                        <option value='Certificate Digital Marketing'>Certificate Digital Marketing</option>
-                                        <option value='Certificate Video Production'>Certificate Video Production</option>
-                                     </Select>
-                             </FormControl>
+                                
+<Controller
+         name='program'
+         control={control}
+         render={({field})=>( 
+                 <FormControl  mt='6px' isInvalid={!!errors.program}>
+                 <FormLabel mb='3px' htmlFor='program' color='#b6b6b4'>Highest qualification</FormLabel>
+                 
+                 <Select 
+                 id='program'
+                {...field}
+                >  
+                      <option value=''>None</option>
+                      <option value ='HND Software Engineering'>HND Software Engineering</option>
+                      <option value ='HND E-Commence and Digital Marketing'>HND E-Commence and Digital Marketing</option>
+                      <option value ='HND Computer Graphic and Web Design'> HND Computer Graphic and Web Design</option>
+                      <option value ='HND Media Photography and Audiovisual'> HND Media Photography and Audiovisual</option>
+                      <option value='HND Journalism'>HND Journalism</option>
+                      <option value='HND Graphic Design'>HND Graphic Design</option>
+                      <option value='HND Cinematography'>HND Cinematography</option>
+                      <option value='ND Applications Development'>ND Applications Development</option>
+                      <option value='ND Webmaster'>ND Webmaster</option>
+                      <option value='ND Graphic Design'>ND Graphic Design</option>
+                      <option value='ND Office Automation Secretaryship'>ND Office Automation Secretaryship</option>
+                      <option value='Certificate Basic Computing'>Certificate Basic Computing</option>
+                      <option value='Certificate Web Design'>Certificate Web Design</option>
+                      <option value='Certificate Graphic Design'>Certificate Graphic Design</option>
+                      <option value='Certificate Digital Marketing'>Certificate Digital Marketing</option>
+                      <option value='Certificate Video Production'>Certificate Video Production</option>                                                                                                 
+                </Select>
+                 
+                 <FormErrorMessage>{errors.program?.message}</FormErrorMessage>
+                 </FormControl>
+          )}
+ 
+ />
                             
                             
                             
@@ -253,7 +414,7 @@ const handleFile =(e:React.ChangeEvent<HTMLInputElement>, name="")=>{
                                      
                         <FormControl  mt='6px'>
                                 <FormLabel  htmlFor='email'>Qualification Document</FormLabel>
-                                   <Input border="none"  onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{handleFile(e,'document');handleNext()}} type="file"/> 
+                                   <Input border="none"  onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{handleFile(e,'document')}} type="file"/> 
                                 <Text fontSize='13px' fontStyle='italic' >upload all documents as one pdf file</Text>
                         </FormControl>
 
@@ -263,27 +424,27 @@ const handleFile =(e:React.ChangeEvent<HTMLInputElement>, name="")=>{
                         <FormLabel  htmlFor='email'>Passport Photo</FormLabel>
                          
                            
-                           <Input border="none"  onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{handleFile(e,'passport');handleNext()}} type="file"/> 
+                           <Input border="none"  onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{handleFile(e,'passport')}} type="file"/> 
                        
                         {/* <Text fontSize='13px' fontStyle='italic' >upload all documents as one pdf file</Text> */}
                         </FormControl>
      
                             
                         
-                            { 
-                                isNext&&
-                             <Box mt='0px'>
-                             <Link to="/registerForm3" className='link'><Button type='submit' variant="outline" h='2.4rem' w='6rem' mt={15} onClick={handleSubmit}>NEXT</Button> </Link>
-                             </Box>
+                            
+                             
+                           
+        <Button type='submit' variant="outline" h='2.4rem' w='6rem' mt={15} onClick={handleSubmit(onSubmit)}>NEXT</Button> 
+                             
 
-                             }
-                             {/* <Flex> */}
-                                     {/* <Text>Already have an account </Text> <Text color='blue' pl='5px'><Link to="/" className='link'>Sign in</Link></Text> */}
-                             {/* </Flex> */}
+                             
+                           
+                           
+                           
 
-                             {
-                           (!isNext&& program!=="")&&<Text color='red' textAlign='center'>Incorrect Inputs</Text>
-                                  }
+                           
+                           
+                           
                      </VStack>
              </Card>
         </Box>
@@ -310,45 +471,62 @@ export const RegisterForm3 = () => {
         const [isNext,setIsNext ]= useState(false)
 
 
-        const handleSubmit =()=>{
-                if(guardianCity !==""&& guardianFirstName !==""&& guardianLastName !==""&&guardianTel !==0){
-                        setIsNext(true)
-                }
-                                }
 
 
-const  handleSubmitData=()=>{
-        setIsSubmitted(true)
-                        // dispatch(admissionAction.applicantGuardian({guardianFirstName,guardianLastName,guardianCity,guardianTel,relationshipWithGuardian:relationship}))
-                        dispatch(postAdmissionAction({
-                                                      
-    fullNames:                applicant.applicantPersonalData.fullNames,
-//     lastName:                 applicant.applicantPersonalData.lastName,
-    email:                    applicant.applicantPersonalData.email,
-    gender:                   applicant.applicantPersonalData.gender,
-    nationality:              applicant.applicantPersonalData. nationality,
-    town:                     applicant.applicantPersonalData.address,
-    program:                  applicant.applicantEducation.program,
-    telephone:                applicant.applicantEducation.telephone,
-    highestQualification:     applicant.applicantEducation.highestQualification,
-    document:                 applicant.applicantEducation.document,        
-    passport:                 applicant.applicantEducation.passport,        
-    guardianFirstName:        guardianFirstName,
-    guardianLastName:         guardianLastName,
-    guardianTel:              guardianTel,
-    guardianCity:             guardianCity,
-    relationshipWithGuardian: relationship,
-    created_at                : ""
+        
+const  navigator = useNavigate()
 
-               
-                        })).then(v=>{
-                             v.payload===true?navigate('/notification'):navigate('/error')   
-                        })
+
+const schema = yup.object().shape({
+        guardianFirstName: yup.string().required('Telelpho is required'),
+        guardianLastName: yup.string().required('qualification is required'),
+        guardianCity: yup.string().required('Program is required'),
+        guardianTel: yup.number().required('Program is required'),
+        relationship: yup.string().required('Program is required'),
+      });
+const {
+        control,
+        handleSubmit,
+        formState: { errors }
+
+}= useForm<GuardianData>({
+        resolver: yupResolver(schema),
+})
+
+
+const onSubmit = (data: GuardianData) => {
+
+
+        dispatch(postAdmissionAction({
+                                                  
+                fullNames:                applicant.applicantPersonalData.fullNames,
+                email:                    applicant.applicantPersonalData.email,
+                gender:                   applicant.applicantPersonalData.gender,
+                nationality:              applicant.applicantPersonalData. nationality,
+                town:                     applicant.applicantPersonalData.address,
+                program:                  applicant.applicantEducation.program,
+                telephone:                applicant.applicantEducation.telephone,
+                highestQualification:     applicant.applicantEducation.highestQualification,
+                document:                 applicant.applicantEducation.document,        
+                passport:                 applicant.applicantEducation.passport,        
+                guardianFirstName:        data.guardianFirstName,
+                guardianLastName:         data.guardianLastName,
+                guardianTel:              data.guardianTel,
+                guardianCity:             data.guardianCity,
+                relationshipWithGuardian: data.relationship,
+                created_at                : ""
                            
-                
-        }
+                                    })).then(v=>{
+                                         v.payload===true?navigate('/notification'):navigate('/error')   
+                                         
+                                    }).then(v=>{
+                                        navigator("/")
+                                    })
+                                
 
 
+       
+      };              
 
        return (
         <Box  display='flex' justifyContent='center' alignItems='center' h='100vh' w='100vw'   >
@@ -370,73 +548,196 @@ const  handleSubmitData=()=>{
                     >
                              
                              <Heading fontSize='18px'>APPLICATION FORM</Heading>
-                             <FormControl  mt='10px'>
-                                     <FormLabel mb='9px' htmlFor='name'>Guardian FirstName</FormLabel>
-                                     <Input name='name'w='100%'  
-                                     onChange={(e)=>{setGuardianFirstName(e.target.value);handleSubmit()}} 
-                                     placeholder="please enter your guardian fristname"/>
-                                     {/* <FormErrorMessage>{formik.errors.guardianFirstName}</FormErrorMessage> */}
-                             </FormControl>
 
-                             <FormControl  mt='6px'>
-                                   <FormLabel mb='9px' htmlFor='name'>Guardian LastName</FormLabel>
-                                   <Input name='name' w='100%' 
-                                   onChange={(e)=>{setGuardianLastName(e.target.value);handleSubmit()}} 
-                                   placeholder="please enter your guradian lastname"/>
-                                   {/* <FormErrorMessage>{formik.errors.guardianLastName}</FormErrorMessage> */}
-                           </FormControl>
-                             <FormControl   mt='6px'>
-                                     <FormLabel mb='9px' htmlFor='name'>Guardian Tel</FormLabel>
-                                     <Input name='name' w='100%' 
-                                      onChange={(e)=>{setGuardianTel(parseInt(e.target.value));handleSubmit()}} placeholder="please enter your guardian tel"/>
-                                     {/* <FormErrorMessage>{formik.errors.guardianTel}</FormErrorMessage> */}
-                             </FormControl>
 
-                             <FormControl   mt='6px'>
-                                     <FormLabel mb='9px' htmlFor='name'>Guardian City</FormLabel>
-                                     <Input name='name' w='100%' 
-                                      onChange={(e)=>{setGuardianCity(e.target.value);handleSubmit()}} placeholder="please enter your guardian city"/>
-                                     {/* <FormErrorMessage>{formik.errors.guardianCity}</FormErrorMessage> */}
-                             </FormControl>
-     
-     
-     
-     
-                             <FormControl   mt='6px'>
-                                     <FormLabel mb='9px' htmlFor='name'>Relationship With Guardian</FormLabel>
 
-                                     <Select onChange={(e)=>{setRelationship(e.target.value)}}>
+                                                       
+<Controller
+        name='guardianFirstName'
+        control={control}
+        render={({field})=>( 
+                <FormControl  mt='6px' isInvalid={!!errors.guardianFirstName}>
+                <FormLabel mb='3px' htmlFor='telephone' color='#b6b6b4'>guardianFirstName</FormLabel>
+                
+               
+               
+               
+               
+               
+               
+                <Input id='guardianFirstName' w='100%'  placeholder="please enter your telephone" {...field}/>
+               
+                
+                <FormErrorMessage>{errors.guardianFirstName?.message}</FormErrorMessage>
+                </FormControl>
+         )}
+ 
+/>
+
+
+                                                                               
+<Controller
+        name='guardianLastName'
+        control={control}
+        render={({field})=>( 
+                <FormControl  mt='6px' isInvalid={!!errors.guardianLastName}>
+                <FormLabel mb='3px' htmlFor='telephone' color='#b6b6b4'>guardianLastName</FormLabel>
+                
+               
+               
+               
+               
+               
+               
+                <Input id='guardianLastName' w='100%'  placeholder="please enter your telephone" {...field}/>
+               
+                
+                <FormErrorMessage>{errors.guardianLastName?.message}</FormErrorMessage>
+                </FormControl>
+         )}
+ 
+/>
+
+                            
+                            
+                            
+                            
+                            
+                            
+                                                                               
+<Controller
+        name='guardianTel'
+        control={control}
+        render={({field})=>( 
+                <FormControl  mt='6px' isInvalid={!!errors.guardianTel}>
+                <FormLabel mb='3px' htmlFor='guardianTel' color='#b6b6b4'>GuardianTel</FormLabel>
+                
+               
+               
+               
+               
+               
+               
+                <Input id='guardianTel' w='100%'  placeholder="please enter your telephone" {...field}/>
+               
+                
+                <FormErrorMessage>{errors.guardianTel?.message}</FormErrorMessage>
+                </FormControl>
+         )}
+ 
+/>
+                
+                                                                                                       
+<Controller
+        name='guardianCity'
+        control={control}
+        render={({field})=>( 
+                <FormControl  mt='6px' isInvalid={!!errors.guardianCity}>
+                <FormLabel mb='3px' htmlFor='guardianCity' color='#b6b6b4'>GuardianCity</FormLabel>
+                
+               
+               
+               
+               
+               
+               
+                <Input id='guardianCity' w='100%'  placeholder="please enter your telephone" {...field}/>
+               
+                
+                <FormErrorMessage>{errors.guardianCity?.message}</FormErrorMessage>
+                </FormControl>
+         )}
+ 
+/>
+                        
+                        
+                        
+                        
+                
+
+                        
+                                                        
+<Controller
+         name='relationship'
+         control={control}
+         render={({field})=>( 
+                 <FormControl  mt='6px' isInvalid={!!errors.relationship}>
+                 <FormLabel mb='3px' htmlFor='relationship' color='#b6b6b4'>Relationship With Guardian</FormLabel>
+                 
+                 <Select 
+                 id='relationship'
+                {...field}
+                >  
+                     
+                     
+                     
+                     <option value ='Father'>Father</option>
+                     <option value ='Mother'>Mother</option>
+                     <option value ='Brother'> Brother</option>
+                     <option value ='Sister'> Sister</option>
+                     <option value='Uncle'>Uncle</option>
+                     <option value='Aunt'>Aunt</option>
+                     <option value='Husband'>Husband</option>
+                     <option value='Wife'>Wife</option>
+                     <option value='Other'>Other</option>
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                </Select>
+                 
+                 <FormErrorMessage>{errors.relationship?.message}</FormErrorMessage>
+                 </FormControl>
+          )}
+ 
+ />
+                        
+                        
+                        
+                        
+     
+     
+     
+
+
+
+
     
-                                                <option value ='Father'>Father</option>
-                                                <option value ='Mother'>Mother</option>
-                                                <option value ='Brother'> Brother</option>
-                                                <option value ='Sister'> Sister</option>
-                                                <option value='Uncle'>Uncle</option>
-                                                <option value='Aunt'>Aunt</option>
-                                                <option value='Husband'>Husband</option>
-                                                <option value='Wife'>Wife</option>
-                                                <option value='Other'>Other</option>
-      
-                                     </Select>
-                                    
-                                    
-                                    
-                             </FormControl>
-        
-                                {
 
-                                isNext&&
-                             <Box mt='10px'>
-                             <Link to="/student" className='link'><Button type='submit' variant="outline" h='2.4rem' w='6rem' mt={15} onClick={()=>{handleSubmitData();setIsSubmitted(!issubmitted)}}>Submit</Button></Link>
-                             </Box>}
-                             {/* <Flex> */}
-                                     {/* <Text>Already have an account </Text> <Text color='blue' pl='5px'><Link to="/" className='link'>Sign in</Link></Text> */}
-                             {/* </Flex> */}
-     
 
-                             {
-                        (!isNext&& relationship!=="")&&<Text color='red' textAlign='center'>Incorrect Inputs</Text>
-                            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                
+
+                              
+                             
+                             <Button type='submit' variant="outline" h='2.4rem' w='6rem' mt={15} onClick={handleSubmit(onSubmit)}>Submit</Button>
+                             
+
+
+
+
                      </VStack>
              </Card>} 
 
