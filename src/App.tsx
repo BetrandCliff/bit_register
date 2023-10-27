@@ -9,6 +9,7 @@ import Login from './components/common/logiin/Login';
 import StudentDashboard from './components/student/dashboard/Dashboard';
 import { StudentResult } from './components/student/result/Result';
 import Profile from './components/student/profile/Profile';
+import ErrorNotification from './utils/notifications/failNotification';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
            <Route path='/registerForm2' element={<RegisterForm2/>}/>
            <Route path='/registerForm3' element={<RegisterForm3/>}/>
            <Route path='/notification' element={<Notification/>}/>
+           <Route path='/error' element={<ErrorNotification/>}/>
            <Route path='/dashboard' element={<StudentDashboard/>}>
                <Route path='/dashboard' element={<StudentResult/>}/>     
                <Route path='/dashboard/profile' element={<Profile/>}/>     

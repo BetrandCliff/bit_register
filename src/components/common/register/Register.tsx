@@ -341,7 +341,9 @@ const  handleSubmitData=()=>{
     created_at                : ""
 
                
-                        })).then(v=>navigate('/notification'))
+                        })).then(v=>{
+                             v.payload===true?navigate('/notification'):navigate('/error')   
+                        })
                            
                 
         }
