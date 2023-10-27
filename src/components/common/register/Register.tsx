@@ -506,10 +506,14 @@ const onSubmit = (data: GuardianData) => {
                            
                                     })).then(v=>{
                                          v.payload===true?navigate('/notification'):navigate('/error')   
+
+                                         setTimeout(()=> navigator("/"),7000)
                                          
-                                    }).then(v=>{
-                                        navigator("/")
                                     })
+                                   
+
+                                   
+                                   
                                 
 
 
