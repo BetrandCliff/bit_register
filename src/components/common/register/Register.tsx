@@ -251,7 +251,7 @@ const  navigator = useNavigate()
 
 const schema = yup.object().shape({
         telephone: yup.number().required('Telelpho is required'),
-        highestQualification: yup.string().required('qualification is required'),
+        highestQualification: yup.string().required('highestQualification is required'),
         program: yup.string().required('Program is required'),
       });
 const {
@@ -461,28 +461,16 @@ export const RegisterForm3 = () => {
       const applicant = useAppSelector(state=>state.admissionApplicant)
 
       const navigate = useNavigate()
-
-        const [guardianFirstName,setGuardianFirstName]= useState('')
-        const [guardianLastName,setGuardianLastName]= useState('')
-        const [guardianCity,setGuardianCity]= useState('')
-        const [guardianTel,setGuardianTel]= useState<number>(0)
-        const [relationship,setRelationship]= useState('')
-        const [issubmitted,setIsSubmitted] = useState(false)
-        const [isNext,setIsNext ]= useState(false)
-
-
-
-
         
 const  navigator = useNavigate()
 
 
 const schema = yup.object().shape({
-        guardianFirstName: yup.string().required('Telelpho is required'),
-        guardianLastName: yup.string().required('qualification is required'),
-        guardianCity: yup.string().required('Program is required'),
-        guardianTel: yup.number().required('Program is required'),
-        relationship: yup.string().required('Program is required'),
+        guardianFirstName: yup.string().required('guardianFirstName is required'),
+        guardianLastName: yup.string().required('guardianLastName is required'),
+        guardianCity: yup.string().required('guardianCity is required'),
+        guardianTel: yup.number().required('guardianTel is required'),
+        relationship: yup.string().required('relationship is required'),
       });
 const {
         control,
@@ -531,7 +519,7 @@ const onSubmit = (data: GuardianData) => {
        return (
         <Box  display='flex' justifyContent='center' alignItems='center' h='100vh' w='100vw'   >
              
-           {!issubmitted &&
+           
              <Card 
              
              h={{base:'95vh',xl:'100vh','2xl':"90vh"}}
@@ -680,19 +668,7 @@ const onSubmit = (data: GuardianData) => {
                      <option value='Husband'>Husband</option>
                      <option value='Wife'>Wife</option>
                      <option value='Other'>Other</option>
-                     
-                     
-                     
-                     
-                     
-                     
-                     
-                     
-                     
-                     
-                     
-                     
-                     
+                                                                     
                 </Select>
                  
                  <FormErrorMessage>{errors.relationship?.message}</FormErrorMessage>
@@ -700,69 +676,16 @@ const onSubmit = (data: GuardianData) => {
           )}
  
  />
-                        
-                        
-                        
-                        
-     
-     
-     
+                                  
 
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                
-
-                              
-                             
+       
+               
                              <Button type='submit' variant="outline" h='2.4rem' w='6rem' mt={15} onClick={handleSubmit(onSubmit)}>Submit</Button>
-                             
-
-
-
-
+                     
                      </VStack>
-             </Card>} 
+             </Card>
 
-    
-
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
+                                        
         </Box>
        )
      }
