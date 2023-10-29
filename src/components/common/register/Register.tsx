@@ -27,9 +27,10 @@ const  navigator = useNavigate()
 
 
 const schema = yup.object().shape({
-        fullName: yup.string().required('FullName is required'),
+        firstName: yup.string().required('FirstName is required'),
+        middleName: yup.string().required('MiddleName is required'),
+        lastName: yup.string().required('LastName is required'),
         email: yup.string().required('Email is required').email("Invalid Email"),
-        gender: yup.string().required('Gender is required'),
         nationality: yup.string().required('Nationality is required'),
         address: yup.string().required('Address is required'),
       });
@@ -44,8 +45,9 @@ const {
 
 
 const onSubmit = (data: PersonalData) => {
+        console.log("PERSONAL VALIDATION")
         dispatch(admissionAction.applicantPersonal
-                ({fullNames:data.fullName,email:data.email,gender:data.gender,nationality:data.nationality,address:data.address}))
+                ({firstName:data.firstName,middleName:data.middleName,lastName:data.lastName,email:data.email,nationality:data.nationality,address:data.address}))
                 navigator('/registerForm2')
        
       };               
@@ -53,12 +55,13 @@ const onSubmit = (data: PersonalData) => {
    <Box  display='flex' justifyContent='center' alignItems='center' h='100vh' w='100vw'   >
         
       <Card 
-          h={{base:'95vh',xl:'100vh','2xl':"90vh"}}
+          h={{base:'95vh',xl:'auto','2xl':"90vh"}}
           w={{base:'95vw',xl:"40vw",'2xl':"60vw"}}
              shadow='2xl'
              justifyContent='center'
              alignItems='center'
              display='flex'
+             p={{base:0,xl:'20px'}}
              >
                {/* <form onSubmit={formik.handleSubmit}>  */}
         {/* <form */}
@@ -72,13 +75,13 @@ const onSubmit = (data: PersonalData) => {
                         <Heading fontSize='16px'>APPLICATION FORM</Heading>
                         
                         <Controller
-                                name='fullName'
+                                name='firstName'
                                 control={control}
                                 render={({field})=>( 
-                                        <FormControl  mt='6px' isInvalid={!!errors.fullName}>
-                                        <FormLabel mb='3px' htmlFor='fullName' color='#b6b6b4'>Full Names</FormLabel>
+                                        <FormControl  mt='4px' isInvalid={!!errors.firstName}>
+                                        <FormLabel mb='1px' htmlFor='firstName' color='#b6b6b4'>First Names</FormLabel>
                                         <Input 
-                                        id='fullName'
+                                        id='firstName'
                                         type='text'
                                          w='100%' 
 
@@ -88,11 +91,55 @@ const onSubmit = (data: PersonalData) => {
                                         
                                         
                                         />
-                                        <FormErrorMessage>{errors.fullName?.message}</FormErrorMessage>
+                                        <FormErrorMessage>{errors.firstName?.message}</FormErrorMessage>
                                         </FormControl>
                                  )}
                         
                         />
+                          
+  <Controller
+          name='middleName'
+          control={control}
+          render={({field})=>( 
+                  <FormControl  mt='4px' isInvalid={!!errors.middleName}>
+                  <FormLabel mb='1px' htmlFor='fullName' color='#b6b6b4'>Middle Names</FormLabel>
+                  <Input 
+                  id='middleName'
+                  type='text'
+                   w='100%' 
+                   {...field}
+                  autoComplete="true"
+                  placeholder="please enter your first name"
+                  
+                  
+                  />
+                  <FormErrorMessage>{errors.middleName?.message}</FormErrorMessage>
+                  </FormControl>
+           )}
+  
+  />
+    
+    <Controller
+          name='lastName'
+          control={control}
+          render={({field})=>( 
+                  <FormControl  mt='4px' isInvalid={!!errors.lastName}>
+                  <FormLabel mb='1px' htmlFor='fullName' color='#b6b6b4'>Last Names</FormLabel>
+                  <Input 
+                  id='lastName'
+                  type='text'
+                   w='100%' 
+                   {...field}
+                  autoComplete="true"
+                  placeholder="please enter your first name"
+                  
+                  
+                  />
+                  <FormErrorMessage>{errors.lastName?.message}</FormErrorMessage>
+                  </FormControl>
+           )}
+  
+  />
                         
                         
                         
@@ -100,8 +147,8 @@ const onSubmit = (data: PersonalData) => {
          name='email'
          control={control}
          render={({field})=>( 
-                 <FormControl  mt='6px' isInvalid={!!errors.email}>
-                 <FormLabel mb='3px' htmlFor='email' color='#b6b6b4'>Email</FormLabel>
+                 <FormControl  mt='4px' isInvalid={!!errors.email}>
+                 <FormLabel mb='1px' htmlFor='email' color='#b6b6b4'>Email</FormLabel>
                  <Input 
                  id='email'
                  type='text'
@@ -123,8 +170,8 @@ const onSubmit = (data: PersonalData) => {
          name='nationality'
          control={control}
          render={({field})=>( 
-                 <FormControl  mt='6px' isInvalid={!!errors.nationality}>
-                 <FormLabel mb='3px' htmlFor='nationality' color='#b6b6b4'>Nationality</FormLabel>
+                 <FormControl  mt='4px' isInvalid={!!errors.nationality}>
+                 <FormLabel mb='1px' htmlFor='nationality' color='#b6b6b4'>Nationality</FormLabel>
                  <Input 
                  id='nationality'
                  type='text'
@@ -151,8 +198,8 @@ const onSubmit = (data: PersonalData) => {
          name='address'
          control={control}
          render={({field})=>( 
-                 <FormControl  mt='6px' isInvalid={!!errors.address}>
-                 <FormLabel mb='3px' htmlFor='address' color='#b6b6b4'>Address</FormLabel>
+                 <FormControl  mt='4px' isInvalid={!!errors.address}>
+                 <FormLabel mb='1px' htmlFor='address' color='#b6b6b4'>Address</FormLabel>
                  <Input 
                  id='address'
                  type='text'
@@ -170,30 +217,29 @@ const onSubmit = (data: PersonalData) => {
                  </FormControl>
           )}
  
-                        />                                                                                                                                                                                                                                                                            
+                        /> 
+                                                                                                                                                                                                                                                                                                   
 
-<Controller
-         name='gender'
-         control={control}
-         render={({field})=>( 
-                 <FormControl  mt='6px' isInvalid={!!errors.gender}>
-                 <FormLabel mb='3px' htmlFor='gender' color='#b6b6b4'>Gender</FormLabel>
-                 
-                 <Select 
-                 id='gender'
-                {...field}
-                >  
-                   <option value=''>None</option>
-                   <option value='Male'>Male</option>
-                   <option value='Female'>Female</option>
 
-                </Select>
-                 
-                 <FormErrorMessage>{errors.gender?.message}</FormErrorMessage>
-                 </FormControl>
-          )}
- 
- />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -204,25 +250,23 @@ const onSubmit = (data: PersonalData) => {
 
 
                      
-                     {   
-                //      isNext&&
-                        <Box mt='5px' >
-                        <Link to="/register" className='link'> <Button type='submit' variant="outline" h='2.4rem' w='6rem' mt={15}  onClick={handleSubmit(onSubmit)}>NEXT</Button> </Link>
+        
+                
+                        <Box mt='3px' >
+                        <Link to="/register" className='link'> <Button type='submit' variant="outline" h='2.4rem' w='6rem'  onClick={handleSubmit(onSubmit)}>NEXT</Button> </Link>
                         </Box>
-                      }
-                        {/* <Flex> */}
-                                {/* <Text>Already have an account </Text> <Text color='blue' pl='5px'><Link to="/" className='link'>Sign in</Link></Text> */}
-                        {/* </Flex> */}
+                 
+                     
+                     
+                     
 
-                {
-                        (!isNext&&gender!=="")&&<Text color='red' textAlign='center'>Incorrect Inputs</Text>
-                }
+ 
+ 
+                
 
                 </VStack>
-                {/* </form> */}
 
-                {/* </form> */}
-                <Text mt='20px' display='flex' color='#b6b6b4'>If you already have an account <Link to='/'><Text color='blue' ml='8px'>login</Text></Link></Text>
+                <Text mt='8px' display='flex' color='#b6b6b4'>If you already have an account <Link to='/'><Text color='blue' ml='8px'>login</Text></Link></Text>
 
         </Card>
    </Box>
@@ -250,6 +294,7 @@ const  navigator = useNavigate()
 
 
 const schema = yup.object().shape({
+        gender: yup.string().required('Gender is required'),
         telephone: yup.number().required('Telelpho is required'),
         highestQualification: yup.string().required('highestQualification is required'),
         program: yup.string().required('Program is required'),
@@ -265,8 +310,9 @@ const {
 
 
 const onSubmit = (data: EducationalData) => {
+        console.log("PERSONAL VALIDATION")
          dispatch(admissionAction.applicantEducation(
-                {telephone:data.telephone,highestQualification:data.highestQualification,
+                {gender:data.gender,telephone:data.telephone,highestQualification:data.highestQualification,
                         program:data.program,document,passport}))
         
                 navigator('/registerForm3')
@@ -284,7 +330,7 @@ const handleFile =(e:React.ChangeEvent<HTMLInputElement>, name="")=>{
              
             
              <Card 
-              h={{base:'95vh',xl:'100vh','2xl':"90vh"}}
+              h={{base:'95vh',xl:'auto','2xl':"90vh"}}
               w={{base:'95vw',xl:"40vw",'2xl':"60vw"}}
                 
              
@@ -292,6 +338,7 @@ const handleFile =(e:React.ChangeEvent<HTMLInputElement>, name="")=>{
                   justifyContent='center'
                   alignItems='center'
                   display='flex'
+                  p={{base:0,xl:'20px'}}
                   >
                    <Link to="/"><Box position='absolute' top={4} left={4}><Image src={backArrow} w='30px'/></Box></Link>  
                  
@@ -299,7 +346,32 @@ const handleFile =(e:React.ChangeEvent<HTMLInputElement>, name="")=>{
                   w='80%'
                     >
                              
-                             <Heading fontSize='22px'>APPLICATION FORM</Heading>  
+                             <Heading fontSize='16px'>APPLICATION FORM</Heading>  
+
+
+        
+<Controller
+         name='gender'
+         control={control}
+         render={({field})=>( 
+                 <FormControl  mt='4px' isInvalid={!!errors.gender}>
+                 <FormLabel mb='1px' htmlFor='gender' color='#b6b6b4'>Gender</FormLabel>
+                 
+                 <Select 
+                 id='gender'
+                {...field}
+                >  
+                   <option value=''>None</option>
+                   <option value='Male'>Male</option>
+                   <option value='Female'>Female</option>
+
+                </Select>
+                 
+                 <FormErrorMessage>{errors.gender?.message}</FormErrorMessage>
+                 </FormControl>
+          )}
+ 
+ />
 
                                 
 <Controller
@@ -349,7 +421,7 @@ const handleFile =(e:React.ChangeEvent<HTMLInputElement>, name="")=>{
                      <option value=''>None</option>
                      <option value ='First School'>Frist school</option>
                      <option value ='GCE Ordinary level'>GCE Ordinary Level</option>
-                     <option value ='Advance Level'>Advance Level</option>
+                     <option value ='Advance Level'>GCE Advance Level</option>
                      <option value='Baccalereat'>Baccalereat</option>
                      <option value='National Diploma'>National Diploma</option>
                      <option value='Higher National Diploma'>Higher National Diploma</option>
@@ -377,7 +449,7 @@ const handleFile =(e:React.ChangeEvent<HTMLInputElement>, name="")=>{
          control={control}
          render={({field})=>( 
                  <FormControl  mt='6px' isInvalid={!!errors.program}>
-                 <FormLabel mb='3px' htmlFor='program' color='#b6b6b4'>Highest qualification</FormLabel>
+                 <FormLabel mb='3px' htmlFor='program' color='#b6b6b4'>Program</FormLabel>
                  
                  <Select 
                  id='program'
@@ -467,6 +539,7 @@ const  navigator = useNavigate()
 
 const schema = yup.object().shape({
         guardianFirstName: yup.string().required('guardianFirstName is required'),
+        guardianMiddleName: yup.string().required('guardianMiddleName is required'),
         guardianLastName: yup.string().required('guardianLastName is required'),
         guardianCity: yup.string().required('guardianCity is required'),
         guardianTel: yup.number().required('guardianTel is required'),
@@ -484,20 +557,24 @@ const {
 
 const onSubmit = (data: GuardianData) => {
 
-
+        console.log("final submit button")
         dispatch(postAdmissionAction({
                                                   
-                fullNames:                applicant.applicantPersonalData.fullNames,
+                firstName:               applicant.applicantPersonalData.firstName,
+                middleName:                applicant.applicantPersonalData.middleName,
+                lastName:                applicant.applicantPersonalData.lastName,
                 email:                    applicant.applicantPersonalData.email,
-                gender:                   applicant.applicantPersonalData.gender,
+               
                 nationality:              applicant.applicantPersonalData. nationality,
                 town:                     applicant.applicantPersonalData.address,
                 program:                  applicant.applicantEducation.program,
+                gender:                   applicant.applicantEducation.gender,
                 telephone:                applicant.applicantEducation.telephone,
                 highestQualification:     applicant.applicantEducation.highestQualification,
                 document:                 applicant.applicantEducation.document,        
                 passport:                 applicant.applicantEducation.passport,        
                 guardianFirstName:        data.guardianFirstName,
+                guardianMiddleName:         data.guardianMiddleName,
                 guardianLastName:         data.guardianLastName,
                 guardianTel:              data.guardianTel,
                 guardianCity:             data.guardianCity,
@@ -526,20 +603,21 @@ const onSubmit = (data: GuardianData) => {
            
              <Card 
              
-             h={{base:'95vh',xl:'100vh','2xl':"90vh"}}
+             h={{base:'95vh',xl:'auto','2xl':"90vh"}}
              w={{base:'95vw',xl:"40vw",'2xl':"60vw"}}
                 
                   shadow='2xl'
                   justifyContent='center'
                   alignItems='center'
                   display='flex'
+                  p={{base:0,xl:'20px'}}
                   >
                    <Link to="/registerForm2"><Box position='absolute' top={4} left={4}><Image src={backArrow} w='30px'/></Box></Link>  
                  <VStack 
                   w='80%'
                     >
                              
-                             <Heading fontSize='18px'>APPLICATION FORM</Heading>
+                             <Heading fontSize='16px'>APPLICATION FORM</Heading>
 
 
 
@@ -569,6 +647,31 @@ const onSubmit = (data: GuardianData) => {
 
                                                                                
 <Controller
+        name='guardianMiddleName'
+        control={control}
+        render={({field})=>( 
+                <FormControl  mt='6px' isInvalid={!!errors.guardianMiddleName}>
+                <FormLabel mb='3px' htmlFor='telephone' color='#b6b6b4'>guardianMiddleName</FormLabel>
+                
+               
+               
+               
+               
+               
+               
+                <Input id='guardianMiddleName' w='100%'  placeholder="please enter your telephone" {...field}/>
+               
+                
+                <FormErrorMessage>{errors.guardianMiddleName?.message}</FormErrorMessage>
+                </FormControl>
+         )}
+ 
+/>
+
+
+
+                                                                               
+<Controller
         name='guardianLastName'
         control={control}
         render={({field})=>( 
@@ -588,9 +691,7 @@ const onSubmit = (data: GuardianData) => {
                 </FormControl>
          )}
  
-/>
-
-                            
+/>                        
                             
                             
                             
@@ -663,10 +764,10 @@ const onSubmit = (data: GuardianData) => {
                      
                      
                      
-                     <option value ='Father'>Father</option>
-                     <option value ='Mother'>Mother</option>
-                     <option value ='Brother'> Brother</option>
-                     <option value ='Sister'> Sister</option>
+                     <option value='Father'>Father</option>
+                     <option value='Mother'>Mother</option>
+                     <option value='Brother'> Brother</option>
+                     <option value='Sister'> Sister</option>
                      <option value='Uncle'>Uncle</option>
                      <option value='Aunt'>Aunt</option>
                      <option value='Husband'>Husband</option>

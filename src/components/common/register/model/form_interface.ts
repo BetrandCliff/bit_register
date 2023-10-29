@@ -1,13 +1,16 @@
 export interface PersonalData{
- fullName:string,
+ firstName:string,
+ middleName:string,
+ lastName:string,
  email:string,
- gender:string,
+ 
  nationality:string,
  address:string
 
 }
 
 export interface EducationalData{
+    gender:string,
     telephone:number
     highestQualification:string
     program:string
@@ -18,6 +21,7 @@ export interface EducationalData{
 
 export interface GuardianData{
     guardianFirstName: string
+    guardianMiddleName: string
     guardianLastName: string
     guardianCity: string
     guardianTel: number

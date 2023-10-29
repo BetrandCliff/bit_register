@@ -1,7 +1,7 @@
 
 import { Box, Button, Card, Flex, FormControl, FormLabel, Heading, Image,Input,Text,useBreakpointValue } from '@chakra-ui/react'
 import React from 'react'
-import  image_source from'../assets/images/land.webp'
+import  image_source from'../assets/images/9.png'
 import { Link } from 'react-router-dom'
 
 const Login = () => {

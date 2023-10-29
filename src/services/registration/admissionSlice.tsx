@@ -59,29 +59,29 @@ const initialState:Admission={
     // applicants: mockAdmissionData,
     applicants: [],
     applicantPersonalData: {
-        fullNames: "",
-       
         email: "",
-        gender: "",
-        nationality:"",
-        address:"",
+
+        nationality: "",
+        address: "",
+        firstName: null,
+        middleName: null,
+        lastName: null
     },
     applicantEducation: {
-        
-        program:"",
-        telephone:0,
-        highestQualification:"",
+        program: "",
+        telephone: 0,
+        highestQualification: "",
         document: null,
-        passport: null
+        passport: null,
+        gender: ""
     },
     applicantGuardian: {
-
-
-        guardianFirstName:        "",
-        guardianLastName:         "",
-        guardianTel:              0,
-        guardianCity:             "",
-        relationshipWithGuardian: ""
+        guardianFirstName: "",
+        guardianLastName: "",
+        guardianTel: 0,
+        guardianCity: "",
+        relationshipWithGuardian: "",
+        guardianMiddleName: null
     },
 
     admissionStatus:null
