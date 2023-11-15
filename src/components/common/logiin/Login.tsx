@@ -39,7 +39,7 @@ const Login = () => {
                              <Input /> 
                          </FormControl>
 
-                         <Button w='80%' onClick={handleLogin}><Link to='/dashboard'>  Login</Link></Button>
+                         <Button w='80%' onClick={handleLogin}><Link to='/'>  Login</Link></Button>
 
                          <Text mt='20px' display='flex' color='#b6b6b4'>If you don't have an account <Link to='/register'><Text color='blue' ml='8px'>Apply</Text></Link></Text>
                 </Box>
